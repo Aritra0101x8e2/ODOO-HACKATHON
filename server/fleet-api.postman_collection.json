@@ -4,6 +4,16 @@
 		"description": "Postman collection for the current fleet management backend routes",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
 	"variable": [
 		{
 			"key": "baseUrl",
@@ -48,7 +58,27 @@
 			"item": [
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const response = pm.response.json();",
+									"if (response.token) {",
+									"    pm.collectionVariables.set('token', response.token);",
+									"    console.log('Token saved to collection variable');",
+									"} else {",
+									"    console.warn('Login response did not include a token');",
+									"}"
+								]
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [
 							{

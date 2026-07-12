@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import { authMiddleware } from "./middleware/auth.middleware.js";
 import { errorMiddleware } from "./middleware/error.middleware.js";
@@ -15,8 +16,14 @@ import { usersRouter } from "./modules/users/user.routes.js";
 
 export const app = express();
 
-app.use(cors());
+app.use(
+	cors({
+		origin: true,
+		credentials: true
+	})
+);
 app.use(express.json());
+app.use(cookieParser())
 
 app.get("/health", (_req, res) => {
 	res.json({ success: true, message: "Fleet API is running" });
