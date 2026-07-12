@@ -1,0 +1,594 @@
+{
+	"info": {
+		"name": "Fleet API",
+		"description": "Postman collection for the current fleet management backend routes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "vehicleId",
+			"value": "veh-1"
+		},
+		{
+			"key": "driverId",
+			"value": "drv-1"
+		},
+		{
+			"key": "tripId",
+			"value": "trip-1"
+		},
+		{
+			"key": "maintenanceId",
+			"value": "maint-1"
+		}
+	],
+	"item": [
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/health",
+					"host": ["{{baseUrl}}"],
+					"path": ["health"]
+				}
+			}
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@fleet.com\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "me"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/dashboard",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "dashboard"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Vehicles",
+			"item": [
+				{
+					"name": "List Vehicles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles"]
+						}
+					}
+				},
+				{
+					"name": "Get Vehicle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles/{{vehicleId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles", "{{vehicleId}}"]
+						}
+					}
+				},
+				{
+					"name": "Create Vehicle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"registrationNumber\": \"KCC-300C\",\n  \"vehicleName\": \"Ford Truck\",\n  \"model\": \"2022\",\n  \"type\": \"Truck\",\n  \"maxLoadCapacity\": 6000,\n  \"odometer\": 50000,\n  \"acquisitionCost\": 22000000,\n  \"status\": \"Available\",\n  \"region\": \"Nakuru\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles"]
+						}
+					}
+				},
+				{
+					"name": "Update Vehicle",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleName\": \"Updated Truck\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles/{{vehicleId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles", "{{vehicleId}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Vehicle",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles/{{vehicleId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles", "{{vehicleId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Drivers",
+			"item": [
+				{
+					"name": "List Drivers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers"]
+						}
+					}
+				},
+				{
+					"name": "Get Driver",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers/{{driverId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers", "{{driverId}}"]
+						}
+					}
+				},
+				{
+					"name": "Create Driver",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Doe\",\n  \"licenseNumber\": \"D67890\",\n  \"licenseCategory\": \"B\",\n  \"licenseExpiry\": \"2028-12-31\",\n  \"contactNumber\": \"+254700000002\",\n  \"safetyScore\": 94,\n  \"status\": \"Available\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers"]
+						}
+					}
+				},
+				{
+					"name": "Update Driver",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"Off Duty\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers/{{driverId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers", "{{driverId}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Driver",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers/{{driverId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers", "{{driverId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Trips",
+			"item": [
+				{
+					"name": "List Trips",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips"]
+						}
+					}
+				},
+				{
+					"name": "Create Trip",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"source\": \"Nairobi\",\n  \"destination\": \"Mombasa\",\n  \"vehicleId\": \"{{vehicleId}}\",\n  \"driverId\": \"{{driverId}}\",\n  \"cargoWeight\": 4000,\n  \"plannedDistance\": 500,\n  \"actualDistance\": 0,\n  \"fuelUsed\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/trips",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips"]
+						}
+					}
+				},
+				{
+					"name": "Dispatch Trip",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips/{{tripId}}/dispatch",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips", "{{tripId}}", "dispatch"]
+						}
+					}
+				},
+				{
+					"name": "Complete Trip",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips/{{tripId}}/complete",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips", "{{tripId}}", "complete"]
+						}
+					}
+				},
+				{
+					"name": "Cancel Trip",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips/{{tripId}}/cancel",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips", "{{tripId}}", "cancel"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Maintenance",
+			"item": [
+				{
+					"name": "List Maintenance Logs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance"]
+						}
+					}
+				},
+				{
+					"name": "Create Maintenance Log",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": \"{{vehicleId}}\",\n  \"description\": \"Brake service\",\n  \"cost\": 15000,\n  \"startDate\": \"2026-07-12\",\n  \"status\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance"]
+						}
+					}
+				},
+				{
+					"name": "Close Maintenance Log",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance/{{maintenanceId}}/close",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance", "{{maintenanceId}}", "close"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Fuel",
+			"item": [
+				{
+					"name": "List Fuel Logs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/fuel",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "fuel"]
+						}
+					}
+				},
+				{
+					"name": "Create Fuel Log",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": \"{{vehicleId}}\",\n  \"liters\": 80,\n  \"cost\": 12000,\n  \"date\": \"2026-07-12\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/fuel",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "fuel"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Get Reports",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/reports",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "reports"]
+						}
+					}
+				},
+				{
+					"name": "Export Reports CSV",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/reports/csv",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "reports", "csv"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
