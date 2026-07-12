@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { userService } from "./users.service.js";
+import { userService } from "./user.service.js";
 
 export const usersController = {
 	list: async (
