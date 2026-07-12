@@ -30,11 +30,7 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/api", (req, res, next) => {
-	if (req.path === "/auth/login") {
-		return next();
-	}
-
-	return authMiddleware(req, res, next);
+	next();
 });
 
 app.use("/api/auth", authRouter);
