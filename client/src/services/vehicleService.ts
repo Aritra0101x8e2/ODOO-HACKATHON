@@ -1,46 +1,126 @@
 import type { Vehicle } from "../types/vehicle";
 
+const API_URL = "http://localhost:5000/api/vehicles";
 
-const vehicles: Vehicle[] = [
 
-{
-id:"1",
-registrationNumber:"WB01AB1234",
-vehicleName:"Tata Prima",
-type:"Truck",
-maxLoadCapacity:12000,
-odometer:45000,
-acquisitionCost:2500000,
-status:"Available"
-},
+// GET ALL VEHICLES
+export async function getVehicles(): Promise<Vehicle[]> {
 
-{
-id:"2",
-registrationNumber:"MH04CD5678",
-vehicleName:"Ashok Leyland",
-type:"Truck",
-maxLoadCapacity:9000,
-odometer:67000,
-acquisitionCost:1800000,
-status:"On Trip"
-},
+  const response = await fetch(API_URL);
 
-{
-id:"3",
-registrationNumber:"DL05EF9876",
-vehicleName:"Mahindra Bolero",
-type:"Van",
-maxLoadCapacity:3000,
-odometer:34000,
-acquisitionCost:900000,
-status:"In Shop"
+  if (!response.ok) {
+    throw new Error("Failed to fetch vehicles");
+  }
+
+  return response.json();
+
 }
 
-];
 
 
-export async function getVehicles(){
+// CREATE VEHICLE
+export async function createVehicle(
+  vehicle: Vehicle
+): Promise<Vehicle> {
 
-return Promise.resolve(vehicles);
+
+  const response = await fetch(API_URL, {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify(vehicle),
+
+  });
+
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Failed to create vehicle"
+    );
+
+  }
+
+
+
+  return response.json();
+
+}
+
+
+
+
+// UPDATE VEHICLE
+export async function updateVehicle(
+  id: string,
+  vehicle: Vehicle
+): Promise<Vehicle> {
+
+
+  const response = await fetch(
+    `${API_URL}/${id}`,
+    {
+
+      method: "PUT",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify(vehicle),
+
+    }
+  );
+
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Failed to update vehicle"
+    );
+
+  }
+
+
+
+  return response.json();
+
+}
+
+
+
+
+
+// DELETE VEHICLE
+export async function deleteVehicle(
+  id: string
+): Promise<void> {
+
+
+  const response = await fetch(
+    `${API_URL}/${id}`,
+    {
+
+      method: "DELETE",
+
+    }
+  );
+
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Failed to delete vehicle"
+    );
+
+  }
+
 
 }
