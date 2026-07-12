@@ -1,5 +1,5 @@
 import { UserModel, toApiDocument } from "../../models/fleet.js";
-import type { User } from "./user.type.js";
+import type { User } from "./user.types.js";
 
 export const userService = {
 	async list(): Promise<User[]> {

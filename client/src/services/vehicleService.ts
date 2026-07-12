@@ -1,40 +1,69 @@
 import type { Vehicle } from "../types/vehicle";
 
+
 const API_URL = "http://localhost:5000/api/vehicles";
 
 
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+}
+
+
+
 // GET ALL VEHICLES
+
 export async function getVehicles(): Promise<Vehicle[]> {
 
-  const response = await fetch(API_URL);
+  const response = await fetch(
+    API_URL,
+    {
+      method: "GET",
+
+      credentials: "include",
+    }
+  );
+
 
   if (!response.ok) {
     throw new Error("Failed to fetch vehicles");
   }
 
-  return response.json();
+
+  const result: ApiResponse<Vehicle[]> =
+    await response.json();
+
+
+  return result.data;
 
 }
 
 
 
+
 // CREATE VEHICLE
+
 export async function createVehicle(
   vehicle: Vehicle
 ): Promise<Vehicle> {
 
 
-  const response = await fetch(API_URL, {
+  const response = await fetch(
+    API_URL,
+    {
+      method: "POST",
 
-    method: "POST",
+      credentials: "include",
 
-    headers: {
-      "Content-Type": "application/json",
-    },
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-    body: JSON.stringify(vehicle),
+      body: JSON.stringify(vehicle),
 
-  });
+    }
+  );
 
 
 
@@ -48,7 +77,11 @@ export async function createVehicle(
 
 
 
-  return response.json();
+  const result: ApiResponse<Vehicle> =
+    await response.json();
+
+
+  return result.data;
 
 }
 
@@ -56,6 +89,7 @@ export async function createVehicle(
 
 
 // UPDATE VEHICLE
+
 export async function updateVehicle(
   id: string,
   vehicle: Vehicle
@@ -65,8 +99,9 @@ export async function updateVehicle(
   const response = await fetch(
     `${API_URL}/${id}`,
     {
-
       method: "PUT",
+
+      credentials: "include",
 
       headers: {
         "Content-Type": "application/json",
@@ -89,15 +124,19 @@ export async function updateVehicle(
 
 
 
-  return response.json();
+  const result: ApiResponse<Vehicle> =
+    await response.json();
+
+
+  return result.data;
 
 }
 
 
 
 
-
 // DELETE VEHICLE
+
 export async function deleteVehicle(
   id: string
 ): Promise<void> {
@@ -106,8 +145,9 @@ export async function deleteVehicle(
   const response = await fetch(
     `${API_URL}/${id}`,
     {
-
       method: "DELETE",
+
+      credentials: "include",
 
     }
   );
@@ -121,6 +161,5 @@ export async function deleteVehicle(
     );
 
   }
-
 
 }
