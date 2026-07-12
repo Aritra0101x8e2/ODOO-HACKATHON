@@ -1,7 +1,6 @@
 import { Router } from "express";
+import { usersController } from "./users.controller.js";
 
 export const usersRouter = Router();
 
-usersRouter.get("/", (_req, res) => {
-	res.json({ success: true, data: [] });
-});
+usersRouter.get("/", usersController.list);
