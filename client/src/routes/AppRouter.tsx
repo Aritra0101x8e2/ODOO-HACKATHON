@@ -1,6 +1,9 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-
-import ProtectedRoute from "./ProtectedRoute";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 import DashboardLayout from "../layouts/DashboardLayout";
 
@@ -14,82 +17,109 @@ import FuelLogs from "../pages/fuel/FuelLogs";
 import Reports from "../pages/reports/Reports";
 import Profile from "../pages/profile/Profile";
 
+
 export default function AppRouter() {
+
   return (
+
     <BrowserRouter>
+
       <Routes>
 
-        {/* Public Routes */}
+
+        {/* Public */}
 
         <Route
           path="/login"
           element={<Login />}
         />
 
-        {/* Protected Routes */}
+
+        {/* Application */}
 
         <Route
           path="/app"
-          element={
-            <ProtectedRoute>
-              <DashboardLayout />
-            </ProtectedRoute>
-          }
+          element={<DashboardLayout />}
         >
+
           <Route
             index
-            element={<Navigate to="dashboard" replace />}
+            element={
+              <Navigate
+                to="dashboard"
+                replace
+              />
+            }
           />
+
 
           <Route
             path="dashboard"
             element={<Dashboard />}
           />
 
+
           <Route
             path="vehicles"
             element={<VehicleList />}
           />
+
 
           <Route
             path="drivers"
             element={<DriverList />}
           />
 
+
           <Route
             path="trips"
             element={<TripList />}
           />
+
 
           <Route
             path="maintenance"
             element={<MaintenanceList />}
           />
 
+
           <Route
             path="fuel"
             element={<FuelLogs />}
           />
+
 
           <Route
             path="reports"
             element={<Reports />}
           />
 
+
           <Route
             path="profile"
             element={<Profile />}
           />
+
+
         </Route>
 
-        {/* Redirect */}
+
+        {/* Fallback */}
 
         <Route
           path="*"
-          element={<Navigate to="/app" replace />}
+          element={
+            <Navigate
+              to="/app/dashboard"
+              replace
+            />
+          }
         />
 
+
       </Routes>
+
     </BrowserRouter>
+
   );
 }
